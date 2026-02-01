@@ -657,8 +657,8 @@
 
     @media (max-width:900px){
       .hero-card--mobile{display:block; margin-top:14px;}
-      /* Hide the desktop/right-column hero card on mobile */
-      .about-hero > .hero-card{display:none;}
+      /* Hide ONLY the desktop/right-column hero card on mobile */
+      .about-hero > aside.hero-card:not(.hero-card--mobile){display:none;}
     }
 
     .kicker{
@@ -1411,14 +1411,21 @@
       .nav-center{width:100%;justify-content:center;gap:16px;order:3;}
       .nav-right{order:2;}
 
-      main{padding:28px 14px 56px;}
+      /* Reduce top whitespace on phones */
+      main{padding:16px 14px 56px;}
 
-      .about-hero{padding-top:18px;gap:20px;}
+      .about-hero{padding-top:10px;gap:20px;}
+
+      /* Ensure the mobile headshot card is visible on small screens */
+      .hero-card--mobile{display:block;}
+
       .about-hero h1{font-size:clamp(30px,8vw,40px);}
       .about-hero .lead{font-size:16px;max-width:unset;}
 
       .hero-actions{gap:10px;}
       .btn{width:100%;text-align:center;}
+      /* Keep the headshot card tightly under the H1 */
+      .hero-card--mobile{margin-top:12px;}
 
       .hero-card{border-radius:22px;}
       .hero-card .caption{padding:14px 14px 16px;}
