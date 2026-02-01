@@ -545,16 +545,36 @@ main{max-width:var(--max);margin:0 auto;padding:56px 20px 24px}
 
       main{padding:28px 14px 18px;}
 
-      .contact-grid{grid-template-columns:1fr;gap:26px;}
+      .contact-grid{
+        grid-template-columns:1fr;
+        gap:18px;
+        grid-template-areas:
+          "title"
+          "tagline"
+          "visual"
+          "social"
+          "signature"
+          "details";
+      }
 
-      .contact-brand .tagline{font-size:16px;max-width:unset;}
+      /* Let left column children participate as grid items so we can reorder */
+      .contact-brand{display:contents;}
+
+      .contact-brand h1{grid-area:title;}
+      .contact-brand .tagline{grid-area:tagline;}
+      .q-side{grid-area:visual;}
+      .social-row{grid-area:social;}
+      .signature-img{grid-area:signature;}
+      .contact-details{grid-area:details;}
+
+      .contact-brand .tagline{font-size:16px;max-width:unset;margin-bottom:0;}
       .contact-details{padding-bottom:0;}
       .signature-img{margin-left:0;max-width:220px;}
 
       .social-row{gap:10px;flex-wrap:wrap;}
       .icon-btn{width:46px;height:46px;}
 
-      .q-side{justify-self:stretch;margin:0;}
+      .q-side{justify-self:stretch;margin:10px 0 0;}
       .carousel{width:100%;}
       .carousel-viewport{border-radius:22px;}
       .carousel-slide img{aspect-ratio:4/3;}

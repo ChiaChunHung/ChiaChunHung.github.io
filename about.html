@@ -652,6 +652,15 @@
       font-size:14px;
     }
 
+    /* Mobile-only hero card placement (so headshot can sit under the H1 on phones) */
+    .hero-card--mobile{display:none;}
+
+    @media (max-width:900px){
+      .hero-card--mobile{display:block; margin-top:14px;}
+      /* Hide the desktop/right-column hero card on mobile */
+      .about-hero > .hero-card{display:none;}
+    }
+
     .kicker{
       display:inline-flex;
       align-items:center;
@@ -1526,6 +1535,15 @@
   <section class="about-hero">
     <div>
       <h1>Hi, I’m Chia-Chun.</h1>
+      <!-- Mobile-only headshot card: appears right under the H1 on phones -->
+      <aside class="hero-card hero-card--mobile" aria-label="About photo card (mobile)">
+        <div class="media">
+          <img src="./TonyHeadshot.png" alt="Chia-Chun Hung headshot" />
+        </div>
+        <div class="caption">
+          I’m happiest when I’m moving — lifting, running, swimming — and turning that energy into better work.
+        </div>
+      </aside>
       <p class="lead">
         A Business Analytics professional at USC Marshall with a strong interest in data analytics, business intelligence, and AI.
         I work best in cross-functional teams, where I’ve helped build AI-driven solutions for real business problems at USC.
