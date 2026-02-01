@@ -39,6 +39,7 @@
       color:var(--text);
       line-height:1.65;
       letter-spacing:-0.01em;
+      overflow-x:hidden;
     }
     a{color:var(--link);text-decoration:none}
     a:hover{text-decoration:underline}
@@ -56,11 +57,14 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
     .nav-center{
       display:flex;
       gap:28px;
+      flex-wrap:wrap;
     }
 
     .nav-center a{
@@ -307,7 +311,7 @@ main{max-width:var(--max);margin:0 auto;padding:56px 20px 24px}
 /* 4-column footer-like grid: Brand / Contact / Sitemap / Visual */
 .contact-grid{
   display:grid;
-  grid-template-columns: 1.35fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap:72px;
   align-items:stretch;
 }
@@ -422,7 +426,7 @@ main{max-width:var(--max);margin:0 auto;padding:56px 20px 24px}
 
     .carousel{
       position:relative;
-      width:min(420px, 100%); /* a touch wider than before */
+      width:min(520px, 100%); /* a touch wider than before */
     }
 
     .carousel-viewport{
@@ -878,3 +882,35 @@ main{max-width:var(--max);margin:0 auto;padding:56px 20px 24px}
 </script>
 </body>
 </html>
+
+    @media (max-width:640px){
+      .nav{padding:12px 14px;justify-content:center;}
+      .brand-left{font-size:18px;}
+      .nav-center{width:100%;justify-content:center;gap:16px;order:3;}
+      .nav-right{order:2;}
+
+      main{padding:28px 14px 18px;}
+
+      .contact-grid{grid-template-columns:1fr;gap:26px;}
+
+      .contact-brand .tagline{font-size:16px;max-width:unset;}
+      .contact-details{padding-bottom:0;}
+      .signature-img{margin-left:0;max-width:220px;}
+
+      .social-row{gap:10px;flex-wrap:wrap;}
+      .icon-btn{width:46px;height:46px;}
+
+      .q-side{justify-self:stretch;margin:0;}
+      .carousel{width:100%;}
+      .carousel-viewport{border-radius:22px;}
+      .carousel-slide img{aspect-ratio:4/3;}
+
+      /* Ensure carousel controls visible on touch */
+      .carousel-btn{opacity:1;pointer-events:auto;}
+
+      /* Disable hover-only avatar overlay behavior on touch */
+      .avatar-overlay{display:none;}
+
+      .copyright{margin-top:44px !important;}
+      footer{margin-top:72px;}
+    }

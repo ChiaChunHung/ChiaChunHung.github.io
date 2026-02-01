@@ -234,6 +234,7 @@
       color:var(--text);
       line-height:1.65;
       letter-spacing:-0.01em;
+      overflow-x:hidden;
     }
     a{color:var(--link);text-decoration:none}
     a:hover{text-decoration:underline}
@@ -251,11 +252,14 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
     .nav-center{
       display:flex;
       gap:28px;
+      flex-wrap:wrap;
     }
 
     .nav-center a{
@@ -2024,3 +2028,60 @@
 </script>
 </body>
 </html>
+    @media (max-width:640px){
+      .nav{padding:12px 14px;justify-content:center;}
+      .brand-left{font-size:18px;}
+      .nav-center{width:100%;justify-content:center;gap:16px;order:3;}
+      .nav-right{order:2;}
+
+      main{padding:28px 14px 56px;}
+
+      .about-hero{padding-top:18px;gap:20px;}
+      .about-hero h1{font-size:clamp(30px,8vw,40px);}
+      .about-hero .lead{font-size:16px;max-width:unset;}
+
+      .hero-actions{gap:10px;}
+      .btn{width:100%;text-align:center;}
+
+      .hero-card{border-radius:22px;}
+      .hero-card .caption{padding:14px 14px 16px;}
+
+      .feature{margin-top:64px;gap:22px;}
+      .feature-copy .sub{font-size:16px;max-width:unset;}
+      .two-col{gap:14px;}
+
+      .now-hero{gap:18px;}
+      .now-hero h2{font-size:clamp(30px,8vw,40px);}
+      .now-hero .lead{font-size:16px;max-width:unset;}
+
+      .awards{margin-top:64px;}
+      .award-card{padding:18px;}
+
+      .feature-media,
+      .now-media,
+      .feature-media.interests-media{
+        border-radius:22px;
+      }
+
+      .feature-media.interests-media{
+        aspect-ratio: 16 / 11;
+        margin-top:10px;
+        transform:none;
+        justify-self:stretch;
+      }
+
+      .gallery-arrow{width:46px;height:46px;}
+      .gallery-dots{bottom:10px;}
+
+      /* Modal: fit on small screens */
+      .modal-backdrop{padding:14px;}
+      .modal{max-height:calc(100vh - 28px);border-radius:18px;}
+      .modal-head{padding:14px 14px 10px;}
+      .modal-body{padding:12px 14px 16px;}
+      .modal-foot{padding:12px 14px;}
+
+      /* Disable hover-only avatar overlay behavior on touch */
+      .avatar-overlay{display:none;}
+
+      footer{margin-top:72px;}
+    }
