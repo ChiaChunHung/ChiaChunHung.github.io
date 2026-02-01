@@ -1,0 +1,1500 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects · Chia-Chun Hung</title>
+  <meta name="description" content="Projects by Chia-Chun Hung — selected analytics, data, and product work." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#fbfbfc;
+      --panel:#ffffff;
+      --text:#0b1220;
+      --muted:#4b5565;
+      --border:rgba(10,15,25,.12);
+      --link:#0b61ff;
+      --shadow:0 18px 60px rgba(10,15,25,.10);
+      --max:1080px;
+    }
+    [data-theme="dark"]{
+      --bg:#0b0c0f;
+      --panel:#0f1117;
+      --text:#e9eef6;
+      --muted:#a6b0c3;
+      --border:rgba(255,255,255,.10);
+      --link:#86b6ff;
+      --shadow:0 18px 60px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.65;
+      letter-spacing:-0.01em;
+    }
+    body.modal-open{overflow:hidden}
+    a{color:var(--link);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Modal styles */
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(10,15,25,.55);
+      backdrop-filter:blur(6px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      z-index:60;
+    }
+    .modal-backdrop.is-open{display:flex;}
+
+    [data-theme="dark"] .modal-backdrop{
+      background:rgba(0,0,0,.70);
+    }
+
+    .modal{
+      width:min(860px, 100%);
+      max-height:min(78vh, 720px);
+      overflow:hidden;
+      border-radius:22px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      box-shadow:var(--shadow);
+      display:flex;
+      flex-direction:column;
+      outline:none;
+    }
+
+    .modal-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 18px 10px;
+      border-bottom:1px solid var(--border);
+    }
+    .modal-head h3{
+      margin:0;
+      font-size:18px;
+      letter-spacing:-0.02em;
+    }
+    .modal-head p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .modal-close{
+      width:40px;
+      height:40px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 92%, transparent);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+    .modal-close:hover{transform:translateY(-1px)}
+    .modal-close:focus-visible{
+      outline:3px solid color-mix(in oklab,var(--link) 40%, transparent);
+      outline-offset:3px;
+    }
+
+    .modal-body{
+      padding:16px 18px 20px;
+      overflow:auto;
+    }
+    .modal-body h4{
+      margin:18px 0 8px;
+      font-size:14px;
+      font-weight:600;
+      letter-spacing:-0.01em;
+    }
+    .modal-body p{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.8;
+    }
+    .modal-body ul{
+      margin:8px 0 12px 18px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.8;
+    }
+    .modal-body li{
+      margin-bottom:6px;
+    }
+    .modal-body strong{
+      color:var(--text);
+      font-weight:600;
+    }
+
+    .project-image{
+      width:100%;
+      max-width:720px;
+      display:block;
+      margin:16px auto;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 92%, transparent);
+      height:auto;
+      object-fit:contain;
+    }
+
+    /* Split layout inside modal (text beside image) */
+    .project-split{
+      display:grid;
+      grid-template-columns:0.95fr 1.05fr;
+      gap:18px;
+      align-items:start;
+      margin:10px 0 14px;
+    }
+    .project-split-media{
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 92%, transparent);
+      padding:14px;
+    }
+    .project-split-media img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:12px;
+      object-fit:contain;
+      max-height:56vh;
+    }
+    .project-split-content h4{
+      margin-top:0;
+    }
+
+    @media (max-width:720px){
+      .project-split{grid-template-columns:1fr;}
+      .project-split-media{padding:12px;}
+      .project-split-media img{max-height:52vh;}
+    }
+
+    /* Special: phone mockups shouldn't be insanely tall in the modal */
+    .project-image.phone-mock{
+      max-width:520px;
+      max-height:62vh;
+      width:auto;
+    }
+
+    .project-gallery{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin:14px 0 6px;
+    }
+    /* Use for 2x2 / 2-up galleries to avoid awkward empty columns */
+    .project-gallery.grid-2{
+      grid-template-columns:repeat(2, minmax(0,1fr));
+    }
+    .project-gallery img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 86%, transparent);
+    }
+
+    /* Phone/app screenshots inside galleries: show full image without cropping */
+    .project-gallery img.phone-shot{
+      height:260px;
+      object-fit:contain;
+      background:color-mix(in oklab,var(--panel) 92%, transparent);
+    }
+
+    @media (max-width:720px){
+      .project-gallery{grid-template-columns:1fr;}
+      .project-gallery img{height:220px;}
+    }
+
+    .metric-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:12px 0 10px;
+    }
+    .metric{
+      flex:0 0 auto;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 92%, transparent);
+      box-shadow:0 1px 0 rgba(10,15,25,.04);
+      min-width:160px;
+    }
+    .metric .k{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.4;
+      margin:0 0 4px;
+    }
+    .metric .v{
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:-0.02em;
+      margin:0;
+      color:var(--text);
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .btn-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 92%, transparent);
+      color:var(--text);
+      font-weight:650;
+      font-size:13px;
+      text-decoration:none;
+    }
+    .btn-link:hover{
+      transform:translateY(-1px);
+      text-decoration:none;
+      border-color:color-mix(in oklab,var(--border) 70%, var(--text) 30%);
+      box-shadow:0 12px 26px rgba(10,15,25,.10);
+    }
+    .btn-link svg{width:16px;height:16px;}
+
+    .tech-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:12px 0;
+    }
+    .tech-tag{
+      display:inline-block;
+      padding:4px 12px;
+      background:color-mix(in oklab,var(--link) 12%, transparent);
+      color:var(--link);
+      border-radius:999px;
+      font-size:12px;
+      font-weight:500;
+      border:1px solid color-mix(in oklab,var(--link) 20%, transparent);
+    }
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:color-mix(in oklab,var(--bg) 88%,transparent);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .nav-center{
+      display:flex;
+      gap:36px;
+    }
+
+    .nav-center a{
+      font-size:15px;
+      font-weight:600;
+      color:var(--muted);
+    }
+
+    .nav-center a:hover{
+      color:var(--text);
+    }
+    .nav-center a[aria-current="page"]{
+      color:var(--text);
+      text-decoration:none;
+      position:relative;
+    }
+    .brand{font-weight:800;letter-spacing:-0.03em}
+
+    .brand-left{
+      font-size:22px;
+    }
+
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+
+    /* Theme pill switch (Kent-style) */
+    .theme-switch{
+      padding:0;
+      border:0;
+      background:transparent;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+    }
+
+    .switch-track{
+      position:relative;
+      width:52px;
+      height:32px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:linear-gradient(135deg,#ff7a18,#ffb400);
+      box-shadow:0 10px 24px rgba(10,15,25,.08);
+      display:inline-block;
+    }
+
+    [data-theme="dark"] .switch-track{
+      background:linear-gradient(135deg,#111827,#0b0c0f);
+      box-shadow:0 12px 28px rgba(0,0,0,.35);
+    }
+
+    .switch-thumb{
+      position:absolute;
+      top:4px;
+      left:4px;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 10px 18px rgba(0,0,0,.18);
+      transform:translateX(20px); /* light: knob on right */
+      transition:transform .22s ease, box-shadow .22s ease;
+      z-index:0;
+    }
+
+    [data-theme="dark"] .switch-thumb{
+      transform:translateX(0); /* dark: knob on left */
+      box-shadow:0 10px 18px rgba(0,0,0,.35);
+    }
+
+    .switch-icon{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:16px;
+      height:16px;
+      opacity:.9;
+      transition:opacity .2s ease, transform .2s ease;
+      z-index:1;
+    }
+
+    .switch-icon-sun{
+      left:8px;
+      color:rgba(255,255,255,.92);
+      opacity:1; /* visible in light */
+    }
+
+    .switch-icon-moon{
+      right:8px;
+      color:rgba(255,255,255,.92);
+      opacity:0; /* hidden in light so it won't be covered by the thumb */
+    }
+
+    [data-theme="dark"] .switch-icon-sun{
+      opacity:0; /* hidden in dark so it won't be covered by the thumb */
+    }
+
+    [data-theme="dark"] .switch-icon-moon{
+      opacity:1; /* visible in dark */
+    }
+
+    .theme-switch:hover .switch-thumb{
+      box-shadow:0 12px 20px rgba(0,0,0,.22);
+    }
+
+    .theme-switch:focus-visible .switch-track{
+      outline:3px solid color-mix(in oklab,var(--link) 40%, transparent);
+      outline-offset:3px;
+    }
+
+    .avatar{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      object-fit:cover;
+      border:1.5px solid var(--border);
+      box-shadow:0 6px 16px rgba(10,15,25,.12);
+    }
+    /* Avatar hover social overlay */
+    .avatar-wrap{
+      position:relative;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+    }
+
+    .avatar-link{
+      display:block;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      position:relative;
+      outline:none;
+    }
+
+    .avatar-link .avatar{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      transition:transform .18s ease, box-shadow .18s ease;
+      transform-origin:center;
+    }
+
+    .avatar-overlay{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      pointer-events:auto; /* allow clicking icons */
+      transform:translateY(2px);
+      transition:opacity .18s ease, transform .18s ease;
+    }
+
+    .avatar-pill{
+      width:30px;
+      height:30px;
+      border-radius:999px;
+      background:color-mix(in oklab, var(--panel) 90%, transparent);
+      border:1px solid var(--border);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 10px 22px rgba(10,15,25,.12);
+      color:var(--text);
+      text-decoration:none;
+      transition:transform .16s ease, background .16s ease;
+      position:absolute;
+    }
+
+    [data-theme="dark"] .avatar-pill{
+      box-shadow:0 14px 30px rgba(0,0,0,.35);
+    }
+
+    .avatar-pill:hover{
+      transform:translateY(-2px) scale(1.05);
+      background:var(--panel);
+      text-decoration:none;
+    }
+
+    .avatar-pill svg{
+      width:16px;
+      height:16px;
+      display:block;
+    }
+
+    /* Place pills at E / SE / S around the avatar */
+    .avatar-pill.ig{ /* East */
+      left:calc(100% + 10px);
+      top:50%;
+      transform:translateY(-50%);
+    }
+
+    .avatar-pill.li{ /* South-East */
+      left:calc(100% + 2px);
+      top:calc(100% + 2px);
+    }
+
+    .avatar-pill.gh{ /* South */
+      left:50%;
+      top:calc(100% + 10px);
+      transform:translateX(-50%);
+    }
+
+    /* Keep hover lift without fighting absolute placement */
+    .avatar-pill.ig:hover{transform:translateY(-52%) scale(1.05)}
+    .avatar-pill.li:hover{transform:translateY(-2px) scale(1.05)}
+    .avatar-pill.gh:hover{transform:translateX(-50%) translateY(-2px) scale(1.05)}
+
+    .avatar-wrap:hover .avatar,
+    .avatar-wrap:focus-within .avatar{
+      transform:scale(1.08);
+      box-shadow:0 10px 26px rgba(10,15,25,.18);
+    }
+
+    .avatar-wrap:hover .avatar-overlay,
+    .avatar-wrap:focus-within .avatar-overlay{
+      opacity:1;
+      pointer-events:auto;
+      transform:translateY(0);
+    }
+
+    /* Slightly increase hit-area on larger screens */
+    @media (min-width:900px){
+      .avatar-overlay{inset:0}
+      .avatar-pill{width:32px;height:32px}
+      .avatar-pill svg{width:17px;height:17px}
+    }
+
+    .avatar-link:focus-visible{
+      outline:3px solid color-mix(in oklab,var(--link) 40%, transparent);
+      outline-offset:3px;
+      border-radius:50%;
+    }
+
+    main{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:56px 20px 24px;
+    }
+
+    .page-hero{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:40px;
+      align-items:center;
+      padding-top:22px;
+      padding-bottom:18px;
+    }
+    .page-hero h1{
+      margin:0 0 12px;
+      font-size:clamp(42px,5.4vw,64px);
+      line-height:1.02;
+      letter-spacing:-0.05em;
+    }
+    .page-hero .sub{
+      margin:0;
+      font-size:clamp(20px,2.3vw,30px);
+      color:var(--muted);
+      letter-spacing:-0.02em;
+      max-width:26ch;
+    }
+    .page-hero .sub .rss{
+      display:inline-flex;
+      vertical-align:middle;
+      margin-left:8px;
+      transform:translateY(2px);
+      color:color-mix(in oklab,var(--muted) 80%, var(--text) 20%);
+    }
+
+    .hero-actions{
+      margin-top:22px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .search{
+      flex:1;
+      min-width:260px;
+      max-width:520px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 92%, transparent);
+      box-shadow:0 1px 0 rgba(10,15,25,.04);
+    }
+
+    [data-theme="dark"] .search{
+      box-shadow:none;
+    }
+
+    .search svg{
+      width:18px;
+      height:18px;
+      color:var(--muted);
+      flex:0 0 auto;
+    }
+
+    .search input{
+      flex:1;
+      border:0;
+      background:transparent;
+      color:var(--text);
+      font-size:14px;
+      outline:none;
+      font-family:inherit;
+    }
+
+    .search input::placeholder{
+      color:color-mix(in oklab,var(--muted) 70%, transparent);
+    }
+
+    .search .count{
+      font-size:13px;
+      font-weight:700;
+      color:var(--muted);
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 86%, transparent);
+      white-space:nowrap;
+    }
+
+    .hero-art{
+      position:relative;
+      height:360px;
+      border-radius:28px;
+      overflow:hidden;
+      background:color-mix(in oklab,var(--panel) 88%, transparent);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .hero-art img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform:scale(1.03);
+      filter:saturate(1.05);
+    }
+
+    .projects-grid{
+      margin-top:26px;
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:24px;
+      margin-bottom:40px;
+    }
+
+    .card{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background:color-mix(in oklab,var(--panel) 92%, transparent);
+      box-shadow:0 1px 0 rgba(10,15,25,.04);
+      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      cursor:pointer;
+    }
+
+    .card:hover{
+      transform:translateY(-2px);
+      border-color:color-mix(in oklab,var(--border) 70%, var(--text) 30%);
+      box-shadow:0 16px 34px rgba(10,15,25,.10);
+    }
+
+    [data-theme="dark"] .card:hover{
+      box-shadow:0 18px 38px rgba(0,0,0,.38);
+    }
+
+    .card a{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .card-media{
+      position:relative;
+      aspect-ratio:4 / 3;
+      background:color-mix(in oklab,var(--panel) 82%, transparent);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .card-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+    }
+
+    /* Darken + unify cover tones for phone mockups so it matches other project covers */
+    .card.phone-tone .card-media{
+      /* Give the empty areas a cinematic background instead of plain white */
+      background:radial-gradient(120% 90% at 50% 20%, rgba(99,102,241,.22) 0%, rgba(10,15,25,.86) 55%, rgba(10,15,25,.96) 100%);
+    }
+
+    .card-media::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      /* Stronger vignette to blend phone into a darker cover */
+      background:linear-gradient(180deg, rgba(10,15,25,.10) 0%, rgba(10,15,25,.46) 60%, rgba(10,15,25,.64) 100%);
+      opacity:0;
+      transition:opacity .18s ease;
+    }
+    .card.phone-tone .card-media::after{opacity:1;}
+
+    .card.phone-tone .card-media img.phone-preview{
+      /* Slightly darker + richer so it sits with the other covers */
+      filter:saturate(.95) contrast(1.12) brightness(.86);
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    /* Phone/app screenshots: avoid awkward cropping in the project card preview */
+    .card-media img.phone-preview{
+      width:auto;
+      height:94%;
+      max-width:94%;
+      object-fit:contain;
+      border-radius:18px;
+      box-shadow:0 14px 40px rgba(10,15,25,.18);
+      background:transparent;
+    }
+
+    .card-dot{
+      position:absolute;
+      top:14px;
+      left:14px;
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:color-mix(in oklab,var(--link) 55%, transparent);
+      box-shadow:0 10px 20px rgba(10,15,25,.18);
+    }
+
+    .card-body{
+      padding:16px 16px 18px;
+    }
+    .card-meta{
+      font-size:14px;
+      font-weight:700;
+      color:var(--muted);
+      margin-bottom:8px;
+      letter-spacing:-0.01em;
+    }
+    .card-title{
+      margin:0;
+      font-size:22px;
+      line-height:1.2;
+      letter-spacing:-0.03em;
+      font-weight:850;
+    }
+    
+    .section-title{
+      margin-top:40px;
+      display:flex;
+      align-items:baseline;
+      justify-content:flex-start;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:20px;
+      letter-spacing:-0.02em;
+      flex:0 0 auto;
+    }
+    .section-title p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      letter-spacing:-0.01em;
+      max-width:62ch;
+      flex:1 1 420px;
+    }
+
+    @media (max-width:980px){
+      .projects-grid{grid-template-columns:repeat(2, minmax(0, 1fr))}
+      .hero-art{height:320px}
+    }
+    @media (max-width:720px){
+      .page-hero{grid-template-columns:1fr; gap:18px}
+      .hero-art{height:280px}
+      .projects-grid{grid-template-columns:1fr}
+    }
+
+    footer{
+      margin-top:120px;
+      padding-top:40px;
+      border-top:1px solid var(--border);
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:24px;
+      font-size:14px;
+    }
+    footer h3{margin-bottom:10px;font-size:14px}
+    footer a{display:block;margin-bottom:6px;color:var(--muted)}
+    footer a:hover{color:var(--text)}
+    .copyright{
+      grid-column:1/-1;
+      margin-top:20px;
+      font-size:13px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="nav">
+    <div class="brand brand-left"><a href="./index.html" style="color:inherit;text-decoration:none;">Chia-Chun Hung</a></div>
+
+    <nav class="nav-center">
+      <a href="./about.html">About</a>
+      <a href="./projects.html" aria-current="page">Projects</a>
+      <a href="./contact.html">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="theme-switch" id="themeToggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+        <span class="switch-track" aria-hidden="true">
+          <span class="switch-icon switch-icon-sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="switch-icon switch-icon-moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 13.5A7.5 7.5 0 0 1 10.5 3a6.5 6.5 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="switch-thumb" aria-hidden="true"></span>
+        </span>
+      </button>
+      <div class="avatar-wrap">
+        <a class="avatar-link" href="./about.html" aria-label="About Chia-Chun Hung">
+          <img
+            class="avatar"
+            src="./Gemini_Generated_Image_7ceflp7ceflp7cef.png"
+            alt="Chia-Chun Hung avatar"
+          />
+        </a>
+
+        <div class="avatar-overlay" aria-label="Social links">
+          <a class="avatar-pill ig" href="https://www.instagram.com/tony_chia_chun/" target="_blank" rel="noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </a>
+
+          <a class="avatar-pill li" href="https://www.linkedin.com/in/hungchiachun/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 9h4v11H4V9Z" fill="currentColor"/>
+              <path d="M6 4.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" fill="currentColor"/>
+              <path d="M10 9h4v1.7c.6-1.1 1.8-2 3.7-2 3 0 4.3 2 4.3 5.4V20h-4v-5.3c0-1.6-.3-2.7-1.8-2.7-1 0-1.6.7-1.9 1.4-.1.3-.1.7-.1 1.1V20h-4V9Z" fill="currentColor"/>
+            </svg>
+          </a>
+
+          <a class="avatar-pill gh" href="https://github.com/ChiaChunHung" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.2-.2-4.5-1.1-4.5-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.3 4.8-4.5 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero" aria-label="Projects hero">
+    <div>
+      <h1>Build insights with data.</h1>
+      <p class="sub">Here, you can see what I can do that AI can't.<span class="rss" aria-hidden="true"></span></p>
+
+      <div class="hero-actions">
+        <div class="search" role="search" aria-label="Search projects">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input id="projectSearch" type="search" placeholder="Search projects" aria-label="Search projects" autocomplete="off" />
+          <span class="count" id="projectCount" aria-label="Number of projects">5</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <img src="./assets/collaboration.jpeg" alt="" />
+    </div>
+  </section>
+
+  <div class="section-title" aria-label="Projects section title">
+    <h2>Projects</h2>
+    <p>Selected work across analytics, data engineering, and product thinking.</p>
+  </div>
+
+  <section class="projects-grid" aria-label="Projects grid">
+    <article class="card" data-project="la-permit">
+      <a href="#" aria-label="Open project: LA Building Permit Analytics for Infrastructure Inequality">
+        <div class="card-media">
+          <span class="card-dot" aria-hidden="true"></span>
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80" alt="" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">December 2025 — Dashboard</div>
+          <h3 class="card-title">LA Building Permit Analytics for Infrastructure Inequality</h3>
+        </div>
+      </a>
+    </article>
+
+    <article class="card phone-tone" data-project="ai-planner">
+      <a href="#" aria-label="Open project: AI-Powered Academic & Career Planning Platform">
+        <div class="card-media">
+          <span class="card-dot" aria-hidden="true" style="background:color-mix(in oklab,var(--link) 45%, transparent)"></span>
+          <img class="phone-preview" src="./assets/ai-career_platform/p1.png" alt="USC Marshall MSBA Planner app mockup" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">September 2025 — Product / Prototype</div>
+          <h3 class="card-title">AI-Powered Academic & Career Planning Platform</h3>
+        </div>
+      </a>
+    </article>
+
+    <article class="card" data-project="customer-seg">
+      <a href="#" aria-label="Open project: Sales Agent & Pricing Analysis for TuneWorks Entertainment Agency">
+        <div class="card-media">
+          <span class="card-dot" aria-hidden="true" style="background:color-mix(in oklab,#10b981 55%, transparent)"></span>
+          <img src="https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=1400&q=80" alt="Concert crowd with stage lights" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">October 2025 — SQL Analytics / Consulting</div>
+          <h3 class="card-title">Sales Agent & Pricing Analysis (Entertainment)</h3>
+        </div>
+      </a>
+    </article>
+
+    <article class="card" data-project="music-cover">
+      <a href="#" aria-label="Open project: Spotify Song Popularity Analysis — The Danceability Factor">
+        <div class="card-media">
+          <span class="card-dot" aria-hidden="true" style="background:color-mix(in oklab,#a855f7 55%, transparent)"></span>
+          <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1400&q=80" alt="DJ mixing deck with neon lights" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">November 2025 — Python / EDA</div>
+          <h3 class="card-title">Spotify Popularity Analysis (Danceability Factor)</h3>
+        </div>
+      </a>
+    </article>
+
+    <article class="card" data-project="rt-sentiment">
+      <a href="#" aria-label="Open project: Rotten Tomatoes AI Sentiment Classifier">
+        <div class="card-media">
+          <span class="card-dot" aria-hidden="true" style="background:color-mix(in oklab,#ef4444 55%, transparent)"></span>
+          <img src="./assets/rotten_tomato/rotten_tomato.jpg" alt="Rotten Tomatoes homepage screenshot" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">July 2025 – August 2025 — NLP / Classification</div>
+          <h3 class="card-title">Rotten Tomatoes AI Sentiment Classifier</h3>
+        </div>
+      </a>
+    </article>
+  </section>
+
+  <!-- Modal for project details -->
+  <div class="modal-backdrop" id="projectModal" aria-hidden="true">
+    <div class="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalTitle">Project Title</h3>
+          <p id="modalMeta">Date — Category</p>
+        </div>
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content will be dynamically inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>
+      <h3>Contact</h3>
+      <a href="/cdn-cgi/l/email-protection#2a4942434b49425f446a4f524b475a464f04494547">Email</a>
+      <a href="https://www.linkedin.com/in/hungchiachun/" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="https://github.com/ChiaChunHung" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="https://www.instagram.com/tony_chia_chun/" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+    <div>
+      <h3>General</h3>
+      <a href="./projects.html">Projects</a>
+      <a href="./about.html">About</a>
+    </div>
+    <div>
+      <h3>Sitemap</h3>
+      <a href="./index.html">Home</a>
+    </div>
+    <div class="copyright">
+      © <span id="year"></span> Chia-Chun Hung
+    </div>
+  </footer>
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Theme toggle
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+
+  const syncThemeUI = () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    toggle.setAttribute('aria-pressed', String(isDark));
+  };
+
+  toggle.onclick = () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      root.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      root.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+    syncThemeUI();
+  };
+
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    root.setAttribute('data-theme', 'dark');
+  }
+  syncThemeUI();
+
+  // Project data
+  const projectData = {
+    'la-permit': {
+      title: 'LA Building Permit Analytics for Infrastructure Inequality',
+      meta: 'December 2025 — Dashboard',
+      content: `
+        <h4>Overview</h4>
+        <p>I built an end-to-end analytics product that quantifies <strong>infrastructure inequality</strong> using large-scale LA building permit data. I developed scalable transformations on <strong>Snowflake (AWS)</strong> using <strong>SQL / Snowpark</strong>, then delivered a decision-ready experience via a <strong>Streamlit</strong> dashboard (vibe-coded) that replaces manual, one-off analysis and makes comparisons between <strong>low-income</strong> and <strong>high-income</strong> neighborhoods easy for stakeholders to explore.</p>
+
+        <div class="metric-row" aria-label="Key metrics">
+          <div class="metric"><p class="k">Low-income permits</p><p class="v">258,141</p></div>
+          <div class="metric"><p class="k">High-income permits</p><p class="v">163,826</p></div>
+          <div class="metric"><p class="k">Low-income essential share</p><p class="v">~65.9%</p></div>
+          <div class="metric"><p class="k">High-income essential share</p><p class="v">~52.1%</p></div>
+        </div>
+
+        <h4>What I built</h4>
+        <ul>
+          <li><strong>Scalable analytics workflows:</strong> Built querying + transformation pipelines on <strong>Snowflake (AWS)</strong> using <strong>SQL / Snowpark</strong> to support large datasets and repeatable analysis.</li>
+          <li><strong>Quantified inequality gap:</strong> Measured an essential-permit disparity—<strong>65.9%</strong> essential permits in low-income areas vs <strong>52.1%</strong> in high-income neighborhoods—highlighting constrained capacity for upgrades.</li>
+          <li><strong>Decision-focused KPIs:</strong> Designed KPIs like <strong>essential share</strong>, <strong>preference gap</strong>, and <strong>cumulative reliance curves</strong> to separate maintenance-driven vs improvement-driven construction patterns.</li>
+          <li><strong>Analytics productization:</strong> Delivered an interactive <strong>Streamlit</strong> dashboard that turns analysis into a reusable tool for ongoing monitoring and stakeholder decision-making.</li>
+        </ul>
+
+        <h4>Technologies used</h4>
+        <div class="tech-tags">
+          <span class="tech-tag">Snowflake</span>
+          <span class="tech-tag">AWS</span>
+          <span class="tech-tag">SQL</span>
+          <span class="tech-tag">Snowpark</span>
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Streamlit</span>
+        </div>
+
+        <div class="modal-actions" aria-label="Project links">
+          <a class="btn-link" href="https://github.com/ChiaChunHung/Infrastructure-inequality-dashboard" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.2-.2-4.5-1.1-4.5-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.3 4.8-4.5 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"/></svg>
+            View code on GitHub
+          </a>
+        </div>
+
+        <h4>Dashboard walkthrough</h4>
+        <ul>
+          <li><strong>Settings & Filters:</strong> Choose income groups, select essential permit categories, and optionally filter by project cost.</li>
+          <li><strong>Composition Analysis:</strong> Compare the distribution of permit types for each income group.</li>
+          <li><strong>Cumulative Share (Essentials First):</strong> Order permit types from essential → non-essential to see how quickly each group accumulates its total share.</li>
+          <li><strong>Preference Gap:</strong> Highlight which permit types are disproportionately represented in high-income vs low-income neighborhoods.</li>
+        </ul>
+
+        <h4>Selected views</h4>
+        <div class="project-gallery grid-2">
+          <img src="./assets/la-permit/hero_01.png" alt="LA Permit Analysis Dashboard overview and filters" />
+          <img src="./assets/la-permit/permit_type_share_by_income.png" alt="Permit type share comparison across income groups" />
+          <img src="./assets/la-permit/Essential_vs_Nonessential_by_income.png" alt="Essential vs others composition by income" />
+          <img src="./assets/la-permit/cumulative_share_by_functional_order.png" alt="Cumulative share by functional order" />
+        </div>
+
+        <h4>Key insights</h4>
+        <ul>
+          <li><strong>Essentials dominate for low-income neighborhoods:</strong> low-income areas show <strong>65.9%</strong> essential permits vs <strong>52.1%</strong> in high-income neighborhoods—suggesting more maintenance pressure and less capacity for discretionary upgrades.</li>
+          <li><strong>Non-essential categories skew higher-income:</strong> categories like <strong>grading</strong> and <strong>swimming pool/spa</strong> appear more frequently in high-income areas, suggesting more discretionary investment.</li>
+          <li><strong>Different “tail” behavior:</strong> once essentials are accounted for, high-income neighborhoods ramp faster in non-essential categories—consistent with more optional upgrades and amenities.</li>
+        </ul>
+
+        <h4>Deep-dive: where the gap shows up</h4>
+        <div class="project-gallery grid-2">
+          <img src="./assets/la-permit/permit_type_differences.png" alt="Permit type differences between income groups" />
+          <img src="./assets/la-permit/permit_type_ratio.png" alt="Permit type ratio high income vs low income" />
+        </div>
+
+        <h4>What I’d do next</h4>
+        <ul>
+          <li><strong>Geography:</strong> map results by council district / neighborhood to localize gaps and identify hotspots.</li>
+          <li><strong>Time:</strong> show how essential vs discretionary work shifts over time (e.g., pre/post policy changes).</li>
+          <li><strong>Policy framing:</strong> translate the gap into interpretable metrics (e.g., “essential backlog index”) for planners.</li>
+        </ul>
+      `
+    },
+    'ai-planner': {
+      title: 'AI-Powered Academic & Career Planning Platform',
+      meta: 'September 2025 — Product / Prototype',
+      content: `
+        <div class="project-split" aria-label="Project overview">
+          <div class="project-split-media">
+            <img src="./assets/ai-career_platform/p1.png" alt="USC Marshall MSBA Planner app: landing screen" loading="lazy" />
+          </div>
+          <div class="project-split-content">
+            <h4>Overview</h4>
+            <p>I designed and prototyped a <strong>mobile-first</strong> academic + career planner that turns a student’s goals into a <strong>decision-ready roadmap</strong> across <strong>courses</strong>, <strong>workshops</strong>, and <strong>alumni networking</strong>. The focus is not “AI for AI’s sake”—it’s a product workflow: capture context, generate recommendations, and help users <strong>execute</strong> and <strong>track progress</strong> in one place.</p>
+
+            <h4 style="margin-top:14px;">What problem it solves</h4>
+            <p>Students often have scattered information (course lists, event links, advice from peers) but no single place to decide <strong>what to do next</strong>. This prototype makes recommendations actionable by turning them into a plan with progress tracking.</p>
+          </div>
+        </div>
+
+
+        <h4>What the platform does</h4>
+        <ul>
+          <li><strong>Profile → Context:</strong> Collects program start term and personal details so recommendations align to a student’s timeline.</li>
+          <li><strong>Skill assessment:</strong> Lets users select skill gaps (technical + business + soft skills) to steer recommendations.</li>
+          <li><strong>AI recommendation engine:</strong> Generates personalized suggestions across courses, workshops/events, and alumni connections.</li>
+          <li><strong>Unified dashboard:</strong> Aggregates everything into one view so users can track progress and adjust goals.</li>
+        </ul>
+
+        <h4>Product walkthrough</h4>
+        <p>Three key screens (left → right): onboarding, skill assessment, recommendations.</p>
+        <div class="project-gallery">
+          <img class="phone-shot" src="./assets/ai-career_platform/p2.png" alt="Onboarding: profile and start term selection" loading="lazy" />
+          <img class="phone-shot" src="./assets/ai-career_platform/p3.png" alt="Skill assessment: select technical and business skills" loading="lazy" />
+          <img class="phone-shot" src="./assets/ai-career_platform/p5.png" alt="Recommendations: personalized next-best actions" loading="lazy" />
+        </div>
+
+        <h4>Key modules</h4>
+        <div class="project-gallery">
+          <img class="phone-shot" src="./assets/ai-career_platform/p6.png" alt="Courses module: course plan and tracking" loading="lazy" />
+          <img class="phone-shot" src="./assets/ai-career_platform/p7.png" alt="My Plan module: academic progress dashboard" loading="lazy" />
+          <img class="phone-shot" src="./assets/ai-career_platform/p9.png" alt="Alumni module: networking and mentorship" loading="lazy" />
+        </div>
+
+        <h4>System flow</h4>
+        <img class="project-image" src="./assets/ai-career_platform/p10.png" alt="System flow: Student profile → AI analysis → personalized recommendations → unified dashboard → track progress" loading="lazy" />
+
+        <h4>What I built (for HR)</h4>
+        <ul>
+          <li><strong>Product thinking:</strong> Defined the end-to-end user journey (onboarding → recommendations → execution) and mapped features to user outcomes.</li>
+          <li><strong>UX + information architecture:</strong> Designed a clean navigation structure (Courses / My Plan / Workshops / Alumni) so users can move from guidance to action quickly.</li>
+          <li><strong>Recommendation framing:</strong> Structured outputs as “next-best actions” with clear categories and an execution layer (save, add, track).</li>
+          <li><strong>Prototype readiness:</strong> Built a consistent component system (cards, chips, progress, tabs) to reduce engineering ambiguity.</li>
+        </ul>
+
+        <h4>Project links</h4>
+        <div class="modal-actions" aria-label="Project links">
+          <a class="btn-link" href="https://github.com/ChiaChunHung/AI-Powered-Academic-Career-Planning-Platform" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.2-.2-4.5-1.1-4.5-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.3 4.8-4.5 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"/></svg>
+            View code on GitHub
+          </a>
+        </div>
+
+        <h4>Next improvements</h4>
+        <ul>
+          <li><strong>Recommendation transparency:</strong> add “why this is recommended” explanations and confidence cues.</li>
+          <li><strong>Data integrations:</strong> connect to real course catalogs, event feeds, and alumni directories.</li>
+          <li><strong>Personalization loops:</strong> use feedback (saved/ignored actions) to refine recommendations over time.</li>
+        </ul>
+      `
+    },
+    'customer-seg': {
+      title: 'Sales Agent & Pricing Analysis for TuneWorks Entertainment Agency',
+      meta: 'October 2025 — SQL-Based EDA / Consulting (McBrainsey & Co.)',
+      content: `
+        <h4>Overview</h4>
+        <p>As part of a consulting-style analytics engagement for <strong>TuneWorks</strong>, a mid-sized entertainment agency, our team transformed raw operational data into actionable recommendations for <strong>agent performance</strong>, <strong>contract pricing</strong>, and <strong>genre supply vs. demand</strong>. We combined <strong>independent SQL analysis</strong> with <strong>AI-assisted exploration</strong> (ChatGPT/Gemini) to validate insights and speed up iteration.</p>
+
+        <h4>Business challenge</h4>
+        <ul>
+          <li><strong>Untapped data value:</strong> TuneWorks had rich booking and performance data but no analytics function to turn it into decisions.</li>
+          <li><strong>Pricing uncertainty:</strong> Contract prices were inconsistent, with a right-skewed distribution and unclear benchmarks.</li>
+          <li><strong>Growth planning:</strong> Leadership needed a roadmap for improving revenue, matching supply to demand, and supporting underperforming agents.</li>
+        </ul>
+
+        <h4>What we analyzed</h4>
+        <ul>
+          <li><strong>Agent performance:</strong> total net revenue, net revenue per contract, and ROI (revenue per dollar of commission).</li>
+          <li><strong>Entertainer revenue concentration:</strong> which entertainers drive reach, loyalty, and profitability.</li>
+          <li><strong>Customer preferences by musical style:</strong> demand vs supply gaps across genres.</li>
+          <li><strong>Pricing distribution:</strong> typical booking ranges and the most representative price benchmark.</li>
+        </ul>
+
+        <h4>Key findings</h4>
+        <ul>
+          <li><strong>Agent performance varies by metric:</strong> one agent led total revenue (volume), another led revenue per contract (deal quality), and another ranked highest in ROI (efficiency).</li>
+          <li><strong>Pricing is right-skewed:</strong> the <strong>median</strong> is a better benchmark than the mean; most bookings clustered around the lower-to-mid price range.</li>
+          <li><strong>Genre market gap:</strong> <strong>Contemporary</strong> was highly requested but had limited entertainer coverage, indicating unmet demand.</li>
+          <li><strong>Concentration risk:</strong> a small set of entertainers drove a disproportionate share of engagements and revenue.</li>
+        </ul>
+
+        <h4>Recommendations</h4>
+        <ul>
+          <li><strong>Route opportunities strategically:</strong> keep routing strong opportunities to top closers; expand opportunities for high-ROI agents; provide pricing/negotiation coaching for underperformers.</li>
+          <li><strong>Optimize entertainer pricing:</strong> raise prices for high-volume entertainers with low revenue per engagement; protect premium niche acts; intervene or phase out consistently weak performers.</li>
+          <li><strong>Rebalance the portfolio:</strong> expand talent in high-ROI styles (e.g., 60’s Music, Country) and reassess low-demand styles via pricing review and repositioning.</li>
+        </ul>
+
+        <h4>Tools & technologies</h4>
+        <div class="tech-tags">
+          <span class="tech-tag">SQL</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">EDA</span>
+          <span class="tech-tag">Data Quality</span>
+          <span class="tech-tag">AI Collaboration</span>
+          <span class="tech-tag">PowerPoint</span>
+        </div>
+
+        <h4>Project artifacts</h4>
+        <div class="modal-actions" aria-label="Project links">
+          <a class="btn-link" href="https://github.com/ChiaChunHung/Sales-Agent-and-Pricing-Analysis-for-Entertainment-Agency" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.2-.2-4.5-1.1-4.5-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.3 4.8-4.5 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"/></svg>
+            View code on GitHub
+          </a>
+        </div>
+      `
+    },
+    'music-cover': {
+      title: 'Spotify Song Popularity Analysis — The Danceability Factor',
+      meta: 'November 2025 — Python / EDA',
+      content: `
+        <h4>Overview</h4>
+        <p>I analyzed Spotify track-level audio features to understand what drives <strong>song popularity</strong>, with a particular focus on whether <strong>danceability</strong> is associated with higher popularity. This project combines exploratory analysis, feature relationships, and practical takeaways for what types of songs tend to perform well on Spotify.</p>
+
+        <h4>Business question</h4>
+        <ul>
+          <li>Which audio features are most correlated with popularity?</li>
+          <li>Does higher <strong>danceability</strong> meaningfully increase popularity?</li>
+          <li>Are there patterns by <strong>genre</strong> / <strong>release year</strong> that affect popularity?</li>
+        </ul>
+
+        <h4>What I did</h4>
+        <ul>
+          <li><strong>Data cleaning:</strong> removed missing/invalid values, standardized columns, and validated distributions.</li>
+          <li><strong>EDA:</strong> explored popularity distribution, feature correlations, and non-linear relationships.</li>
+          <li><strong>Feature analysis:</strong> compared popularity across different danceability ranges and segments.</li>
+          <li><strong>Storytelling:</strong> translated statistical patterns into actionable insights.</li>
+        </ul>
+
+        <h4>Key insights</h4>
+        <ul>
+          <li><strong>Danceability matters — but it's not the only driver:</strong> popularity is influenced by multiple features, so danceability should be considered together with energy, loudness, and release timing.</li>
+          <li><strong>Popularity is right-skewed:</strong> most songs have low popularity, while a small set of hits dominate streams.</li>
+          <li><strong>Feature interactions:</strong> certain combinations (high danceability + high energy) align more often with popular tracks.</li>
+        </ul>
+
+        <h4>Tools & technologies</h4>
+        <div class="tech-tags">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Pandas</span>
+          <span class="tech-tag">NumPy</span>
+          <span class="tech-tag">Matplotlib</span>
+          <span class="tech-tag">EDA</span>
+          <span class="tech-tag">Jupyter Notebook</span>
+        </div>
+
+        <h4>Project artifacts</h4>
+        <div class="modal-actions" aria-label="Project links">
+          <a class="btn-link" href="https://github.com/ChiaChunHung/Spotify-Song-Popularity-Analysis-The-Danceability-Factor/tree/main" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.2-.2-4.5-1.1-4.5-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.3 4.8-4.5 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"/></svg>
+            View code on GitHub
+          </a>
+        </div>
+      `
+    },
+    'rt-sentiment': {
+      title: 'Rotten Tomatoes AI Sentiment Classifier',
+      meta: 'July 2025 – August 2025 — NLP / Classification',
+      content: `
+        <h4>Overview</h4>
+        <p>I built an end-to-end NLP workflow that turns <strong>movie review text</strong> into a <strong>sentiment label</strong>. The repository is structured so someone can reproduce the full pipeline: data loading → text preprocessing → feature engineering / embeddings → model training → evaluation → saving artifacts.</p>
+
+        <h4>Problem statement</h4>
+        <ul>
+          <li><strong>Goal:</strong> predict review sentiment from text (e.g., negative vs positive, or multi-class depending on label design).</li>
+          <li><strong>Why it matters:</strong> sentiment signals support review summarization, content ranking, and customer feedback triage at scale.</li>
+        </ul>
+
+        <h4>Dataset</h4>
+        <ul>
+          <li><strong>Source:</strong> Rotten Tomatoes-style movie review text dataset (as documented in the repo).</li>
+          <li><strong>Unit of analysis:</strong> individual review / phrase text.</li>
+          <li><strong>Target:</strong> sentiment label (binary or multi-class).</li>
+        </ul>
+
+        <h4>Approach</h4>
+        <ul>
+          <li><strong>Text cleaning:</strong> normalize casing, remove noisy characters, and standardize whitespace.</li>
+          <li><strong>Tokenization:</strong> convert raw text into tokens suitable for feature extraction.</li>
+          <li><strong>Feature engineering:</strong> build classic sparse text features (e.g., TF-IDF / bag-of-words) as strong baselines.</li>
+          <li><strong>Modeling:</strong> train and compare classifiers; tune hyperparameters and validate generalization.</li>
+          <li><strong>Evaluation:</strong> report classification metrics and do quick error analysis to understand failure modes.</li>
+        </ul>
+
+        <h4>What I built</h4>
+        <ul>
+          <li><strong>Reproducible pipeline:</strong> clear steps to run preprocessing, train a model, and evaluate results.</li>
+          <li><strong>Baseline-first mindset:</strong> started with simple, interpretable models to establish a performance benchmark.</li>
+          <li><strong>Comparison framework:</strong> a consistent evaluation setup so model choices are apples-to-apples.</li>
+          <li><strong>Project packaging:</strong> repo organization and saved artifacts so others can reuse/extend the work.</li>
+        </ul>
+
+        <h4>Results & takeaways</h4>
+        <ul>
+          <li><strong>Performance:</strong> see the repo README for the exact metrics (accuracy / precision / recall / F1).</li>
+          <li><strong>Most common errors:</strong> neutral/ambiguous language, sarcasm, and long reviews with mixed sentiment are typically harder to classify.</li>
+          <li><strong>Best practice:</strong> strong baselines (TF-IDF + linear models) often perform surprisingly well before moving to heavier models.</li>
+        </ul>
+
+        <h4>How to run (high level)</h4>
+        <ul>
+          <li><strong>1) Install deps:</strong> create a virtual env and install requirements (see repo).</li>
+          <li><strong>2) Prepare data:</strong> download/place the dataset in the expected folder structure.</li>
+          <li><strong>3) Train:</strong> run the training script / notebook to fit the model.</li>
+          <li><strong>4) Evaluate:</strong> generate metrics and review misclassifications.</li>
+        </ul>
+
+        <h4>Tools & technologies</h4>
+        <div class="tech-tags">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">NLP</span>
+          <span class="tech-tag">Text Classification</span>
+          <span class="tech-tag">scikit-learn</span>
+          <span class="tech-tag">TF-IDF / BoW</span>
+          <span class="tech-tag">Model Evaluation</span>
+        </div>
+
+        <h4>Project link</h4>
+        <div class="modal-actions" aria-label="Project links">
+          <a class="btn-link" href="https://github.com/ChiaChunHung/Rotten-Tomatoes-AI-Sentiment-Classifier" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.2-.2-4.5-1.1-4.5-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.3 4.8-4.5 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"/></svg>
+            View code on GitHub
+          </a>
+        </div>
+
+        <h4>Next improvements</h4>
+        <ul>
+          <li><strong>Richer text representations:</strong> add word embeddings or a transformer-based model to handle context and nuance.</li>
+          <li><strong>Data diagnostics:</strong> measure class imbalance and add stratified splits / calibration if needed.</li>
+          <li><strong>Explainability:</strong> show top-weighted terms and example-based explanations for stakeholders.</li>
+        </ul>
+      `,
+    }
+  };
+
+  // Modal functionality
+  const modalBackdrop = document.getElementById('projectModal');
+  const modalClose = document.getElementById('modalClose');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalMeta = document.getElementById('modalMeta');
+  const modalBody = document.getElementById('modalBody');
+
+  const openModal = (projectId) => {
+    const project = projectData[projectId];
+    if (!project) return;
+    
+    modalTitle.textContent = project.title;
+    modalMeta.textContent = project.meta;
+    modalBody.innerHTML = project.content;
+    
+    modalBackdrop.classList.add('is-open');
+    modalBackdrop.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    
+    const dialog = modalBackdrop.querySelector('.modal');
+    if (dialog) dialog.focus();
+  };
+
+  const closeModal = () => {
+    modalBackdrop.classList.remove('is-open');
+    modalBackdrop.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  };
+
+  // Attach event listeners to project cards
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      const projectId = card.getAttribute('data-project');
+      openModal(projectId);
+    });
+  });
+
+  // Search/filter projects
+  const searchInput = document.getElementById('projectSearch');
+  const countEl = document.getElementById('projectCount');
+  const projectCards = Array.from(document.querySelectorAll('.projects-grid .card'));
+
+  const normalize = (s) => (s || '').toLowerCase().trim();
+
+  const setCount = (n) => {
+    if (countEl) countEl.textContent = String(n);
+  };
+
+  const filterProjects = (query) => {
+    const q = normalize(query);
+    let visible = 0;
+
+    projectCards.forEach((card) => {
+      const title = card.querySelector('.card-title')?.textContent || '';
+      const meta = card.querySelector('.card-meta')?.textContent || '';
+      const haystack = `${title} ${meta}`.toLowerCase();
+      const match = !q || haystack.includes(q);
+
+      card.style.display = match ? '' : 'none';
+      if (match) visible += 1;
+    });
+
+    setCount(visible);
+  };
+
+  if (searchInput) {
+    // Initialize
+    setCount(projectCards.length);
+
+    // Typing
+    searchInput.addEventListener('input', (e) => {
+      filterProjects(e.target.value);
+    });
+
+    // Handles the native clear ("x") action on type="search"
+    searchInput.addEventListener('search', (e) => {
+      filterProjects(e.target.value);
+    });
+  }
+
+  // Close modal handlers
+  if (modalClose) {
+    modalClose.addEventListener('click', closeModal);
+  }
+
+  modalBackdrop.addEventListener('mousedown', (e) => {
+    if (e.target === modalBackdrop) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalBackdrop.classList.contains('is-open')) {
+      closeModal();
+    }
+  });
+</script>
+
+</body>
+</html>
