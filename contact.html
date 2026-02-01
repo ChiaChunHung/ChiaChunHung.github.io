@@ -538,7 +538,35 @@ main{max-width:var(--max);margin:0 auto;padding:56px 20px 24px}
     }
 
     @media (max-width:640px){
-      .carousel-slide img{aspect-ratio: 4 / 3;}
+      .nav{padding:12px 14px;justify-content:center;}
+      .brand-left{font-size:18px;}
+      .nav-center{width:100%;justify-content:center;gap:16px;order:3;}
+      .nav-right{order:2;}
+
+      main{padding:28px 14px 18px;}
+
+      .contact-grid{grid-template-columns:1fr;gap:26px;}
+
+      .contact-brand .tagline{font-size:16px;max-width:unset;}
+      .contact-details{padding-bottom:0;}
+      .signature-img{margin-left:0;max-width:220px;}
+
+      .social-row{gap:10px;flex-wrap:wrap;}
+      .icon-btn{width:46px;height:46px;}
+
+      .q-side{justify-self:stretch;margin:0;}
+      .carousel{width:100%;}
+      .carousel-viewport{border-radius:22px;}
+      .carousel-slide img{aspect-ratio:4/3;}
+
+      /* Ensure carousel controls visible on touch */
+      .carousel-btn{opacity:1;pointer-events:auto;}
+
+      /* Disable hover-only avatar overlay behavior on touch */
+      .avatar-overlay{display:none;}
+
+      .copyright{margin-top:44px !important;}
+      footer{margin-top:72px;}
     }
 
 
@@ -881,36 +909,3 @@ main{max-width:var(--max);margin:0 auto;padding:56px 20px 24px}
   })();
 </script>
 </body>
-</html>
-
-    @media (max-width:640px){
-      .nav{padding:12px 14px;justify-content:center;}
-      .brand-left{font-size:18px;}
-      .nav-center{width:100%;justify-content:center;gap:16px;order:3;}
-      .nav-right{order:2;}
-
-      main{padding:28px 14px 18px;}
-
-      .contact-grid{grid-template-columns:1fr;gap:26px;}
-
-      .contact-brand .tagline{font-size:16px;max-width:unset;}
-      .contact-details{padding-bottom:0;}
-      .signature-img{margin-left:0;max-width:220px;}
-
-      .social-row{gap:10px;flex-wrap:wrap;}
-      .icon-btn{width:46px;height:46px;}
-
-      .q-side{justify-self:stretch;margin:0;}
-      .carousel{width:100%;}
-      .carousel-viewport{border-radius:22px;}
-      .carousel-slide img{aspect-ratio:4/3;}
-
-      /* Ensure carousel controls visible on touch */
-      .carousel-btn{opacity:1;pointer-events:auto;}
-
-      /* Disable hover-only avatar overlay behavior on touch */
-      .avatar-overlay{display:none;}
-
-      .copyright{margin-top:44px !important;}
-      footer{margin-top:72px;}
-    }
