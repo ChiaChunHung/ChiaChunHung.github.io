@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
   <style>
     :root{
@@ -34,7 +36,7 @@
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
       background:var(--bg);
       color:var(--text);
       line-height:1.65;
@@ -322,6 +324,7 @@ main{max-width:var(--max);margin:0 auto;padding:24px 20px}
       line-height:1.05;
       letter-spacing:-0.04em;
       margin:0 0 18px;
+      font-optical-sizing:auto;
     }
     .hero p{
       font-size:19px;
@@ -608,6 +611,15 @@ main{max-width:var(--max);margin:0 auto;padding:24px 20px}
   document.getElementById('year').textContent = new Date().getFullYear();
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');
+
+  // Reduce layout shifts between local file:// and GitHub Pages by ensuring Inter is ready
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      document.documentElement.classList.add('fonts-ready');
+    });
+  } else {
+    document.documentElement.classList.add('fonts-ready');
+  }
 
   const syncThemeUI = () => {
     const isDark = root.getAttribute('data-theme') === 'dark';
